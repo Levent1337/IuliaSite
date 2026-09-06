@@ -1,0 +1,396 @@
+/* ==========================================================================
+   THEATRE DIRECTOR PORTFOLIO — STYLESHEET
+   Change things here to restyle the whole site. Key knobs are grouped
+   under "THEME" at the top — colors, type, spacing — so you can tweak
+   the look without hunting through the rest of the file.
+   ========================================================================== */
+
+/* ---------- THEME (edit these) ---------- */
+:root {
+  --color-bg: #faf9f7;
+  --color-text: #1a1a1a;
+  --color-muted: #6b6b6b;
+  --color-line: #dcdad6;
+  --color-accent: #1a1a1a;
+
+  --font-display: "Georgia", "Iowan Old Style", "Times New Roman", serif;
+  --font-body: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+
+  --max-width: 780px;
+  --space-unit: 1rem;
+
+  --tracking-label: 0.14em;
+}
+
+/* ---------- RESET ---------- */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  margin: 0;
+}
+
+/* ---------- LAYOUT ---------- */
+.wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* wider wrapper for the homepage project grid */
+.wrap--wide {
+  max-width: 1100px;
+}
+
+/* ---------- SITE HEADER / NAV ---------- */
+.site-nav {
+  padding: 2.5rem 0 1.5rem;
+}
+
+.site-nav .wrap {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.site-nav__name {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+}
+
+.site-nav__links a {
+  font-size: 0.8rem;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin-left: 1.5rem;
+}
+
+.site-nav__links a:hover,
+.site-nav__links a.is-active {
+  color: var(--color-text);
+}
+
+/* ---------- HERO (homepage title + portrait) ---------- */
+.hero {
+  padding: 3rem 0 4rem;
+  text-align: center;
+}
+
+.hero__title {
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  letter-spacing: 0.01em;
+}
+
+.hero__subtitle {
+  margin-top: 0.75rem;
+  color: var(--color-muted);
+  font-size: 0.95rem;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+.hero__portrait {
+  margin: 2.75rem auto 0;
+  max-width: 420px;
+}
+
+.hero__portrait img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  background: #e7e5e1; /* placeholder tone while real photo is missing */
+}
+
+.hero__intro {
+  max-width: 560px;
+  margin: 2rem auto 0;
+  color: var(--color-muted);
+  font-size: 1rem;
+}
+
+/* ---------- SECTION LABEL ---------- */
+.section-label {
+  text-align: center;
+  font-size: 0.78rem;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-muted);
+  padding-top: 3rem;
+  padding-bottom: 2.5rem;
+  border-top: 1px solid var(--color-line);
+}
+
+/* ---------- PROJECT GRID (homepage) ---------- */
+.projects {
+  padding-bottom: 4rem;
+}
+
+/* flexbox (not grid) so an incomplete last row centers itself
+   instead of hugging the left edge */
+.project-grid {
+  --grid-cols: 3;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+/* one image per tile; title (and year) fade in on hover */
+.project-tile {
+  position: relative;
+  display: block;
+  flex: 0 0 calc((100% - (var(--grid-cols) - 1) * 1.5rem) / var(--grid-cols));
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #e7e5e1;
+}
+
+.project-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.project-tile:hover img {
+  transform: scale(1.05);
+}
+
+.project-tile__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.4rem;
+  background: rgba(26, 26, 26, 0);
+  opacity: 0;
+  transition: background 0.35s ease, opacity 0.35s ease;
+}
+
+.project-tile:hover .project-tile__overlay,
+.project-tile:focus-visible .project-tile__overlay {
+  background: rgba(26, 26, 26, 0.45);
+  opacity: 1;
+}
+
+.project-tile__title {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: #fff;
+  transform: translateY(6px);
+  transition: transform 0.35s ease;
+}
+
+.project-tile__year {
+  font-size: 0.8rem;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+  transform: translateY(6px);
+  transition: transform 0.35s ease 0.03s;
+}
+
+.project-tile:hover .project-tile__title,
+.project-tile:hover .project-tile__year,
+.project-tile:focus-visible .project-tile__title,
+.project-tile:focus-visible .project-tile__year {
+  transform: translateY(0);
+}
+
+@media (max-width: 900px) {
+  .project-grid {
+    --grid-cols: 2;
+  }
+}
+
+@media (max-width: 560px) {
+  .project-grid {
+    --grid-cols: 1;
+  }
+}
+
+/* ---------- PROJECT DETAIL PAGE ---------- */
+.project-header {
+  padding: 3rem 0 2.5rem;
+}
+
+.project-header__back {
+  display: inline-block;
+  font-size: 0.78rem;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin-bottom: 2rem;
+}
+
+.project-header__back:hover {
+  color: var(--color-text);
+}
+
+.project-header__title {
+  font-size: clamp(2rem, 4.5vw, 2.8rem);
+}
+
+.project-header__meta {
+  margin-top: 0.75rem;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.project-hero-image {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #e7e5e1;
+  margin-bottom: 2.5rem;
+}
+
+.project-hero-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.project-body {
+  max-width: 620px;
+  margin: 0 auto;
+  padding-bottom: 3rem;
+}
+
+.project-body p {
+  margin: 0 0 1.3rem;
+  color: var(--color-text);
+}
+
+.project-body p.lede {
+  font-size: 1.1rem;
+  color: var(--color-muted);
+}
+
+.project-credits {
+  max-width: 620px;
+  margin: 0 auto 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--color-line);
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+
+.project-credits dl {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  row-gap: 0.5rem;
+  margin: 0;
+}
+
+.project-credits dt {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+}
+
+.project-credits dd {
+  margin: 0;
+  color: var(--color-text);
+}
+
+.project-gallery {
+  padding-bottom: 4rem;
+}
+
+.project-gallery__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.project-gallery__grid img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: #e7e5e1;
+}
+
+.project-gallery__grid img.wide {
+  grid-column: 1 / -1;
+  aspect-ratio: 16 / 9;
+}
+
+/* ---------- FOOTER ---------- */
+.site-footer {
+  padding: 2.5rem 0 3.5rem;
+  border-top: 1px solid var(--color-line);
+  text-align: center;
+  color: var(--color-muted);
+  font-size: 0.82rem;
+}
+
+.site-footer a {
+  border-bottom: 1px solid var(--color-line);
+}
+
+.site-footer a:hover {
+  color: var(--color-text);
+  border-color: var(--color-text);
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 600px) {
+  .site-nav .wrap {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .site-nav__links a {
+    margin: 0 0.75rem 0 0;
+  }
+
+  .project-gallery__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .project-credits dl {
+    grid-template-columns: 1fr;
+    row-gap: 0.2rem;
+  }
+
+  .project-credits dt {
+    margin-top: 0.75rem;
+  }
+}
